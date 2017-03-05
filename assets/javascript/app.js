@@ -3,22 +3,27 @@ var questionCount = 0;
 var timer;
 var corr = 0;
 var inCorr = 0;
-var notAnswered = 0;
+var unAnswered = 0;
 var radioEverChecked = false;
+var submitEverDone = false;
+var radios = [];
+var gotARightOne = false;
+var neverAnswered = false;
 
 //  Game Questions Object
 
   var gameQuest = [{
   					question: "What is one of the best know catch phrases from this movie?",
 		            answers:["Gotta keep moving","Don't stop now","Just keep swimming","I can't remember"],
+		            url: "../images/sunset.jpg",
 	  	//			url: "http://www.grahamowengallery.com/forum/mallard.jpg",
 	  				correctAnswer: "Just keep swimming"
-	  	//			url: "../images/...jpg",			
 	  				},
 					
 					{
 					question: "What type of a fish is Nemo?",
 	  				answers:["Blowfish","Clownfish","Pufferfish","Striped fish"],
+	  				url: "../images/sunset.jpg",
 	  //				url: "https://i.ytimg.com/vi/_z-1fTlSDF0/maxresdefault.jpg",
 	  				correctAnswer: "Clownfish"
 	  				},
@@ -26,6 +31,7 @@ var radioEverChecked = false;
 					{
 					question: "How old is Crush, the Turtle?",
 	  				answers:["102","150","40","99"],
+	  				url: "../images/sunset.jpg",
 	  //				url: "http://www.grahamowengallery.com/forum/mallard.jpg",
 	  				correctAnswer: "150",
 	  				},
@@ -40,6 +46,7 @@ var radioEverChecked = false;
 					{
 					question: "What is the safest way for Dory and Marlin to get past the maze of Jellyfish",
 	  				answers:["Over","Under","Through","Around"],
+	  				url: "../images/sunset.jpg",
 	  //				url: "http://www.grahamowengallery.com/forum/mallard.jpg",
 	  				correctAnswer: "Over",
 	  				},
@@ -47,6 +54,7 @@ var radioEverChecked = false;
 					{
 					question: "What is Anterograde Amnesia?",
 	  				answers:["Inability to swim for a long time","Inability to keep friends","Inability to swim straight","Inability to form new memories"],
+	  				url: "../images/sunset.jpg",
 	  //				url: "http://www.grahamowengallery.com/forum/mallard.jpg",
 	  				correctAnswer: "Inability to form new memories"
 	  				},
@@ -54,6 +62,7 @@ var radioEverChecked = false;
 					{
 					question: "Which one of these can foster memory retention for those who suffer from Anterograde Amnesia?",
 	  				answers:["A positive environment","Social support","Familiarity","All of the above"],
+	  				url: "../images/sunset.jpg",
 	  //				url: "http://www.grahamowengallery.com/forum/mallard.jpg",
 	  				correctAnswer: "All of the above",
 	  				},
@@ -61,6 +70,7 @@ var radioEverChecked = false;
 					{
 					question: "Why was Nemo's fin smaller than the other?",
 	  				answers:["Birth defect","Ran into the side of a boat","Attacked while still in the egg","Clipped by a shark"],
+	  				url: "../images/sunset.jpg",
 	  //				url: "http://www.grahamowengallery.com/forum/mallard.jpg",
 	  				correctAnswer: "Attacked while still in the egg",
 	  				},
@@ -68,6 +78,7 @@ var radioEverChecked = false;
 					{
 					question: "What address was Dory and Marlin were looking for?",
 	  				answers:["44 Winding Way","13 Shark Drive","52 Reed Road","42 Wallaby Way"],
+	  				url: "../images/sunset.jpg",
 	  //				url: "http://www.grahamowengallery.com/forum/mallard.jpg",
 	  				correctAnswer: "42 Wallaby Way",
 	  
@@ -75,6 +86,7 @@ var radioEverChecked = false;
 	  									{
 					question: "Who ate Nemo's mother, Coral, and all but one of her eggs?",
 	  				answers:["Jellyfish","Barracuda","A shark","A whale"],
+	  				url: "../images/sunset.jpg",
 	  //				url: "https://i.ytimg.com/vi/_z-1fTlSDF0/maxresdefault.jpg",
 	  				correctAnswer: "Barracuda"
 	  				}];
@@ -87,7 +99,7 @@ var game = {
 // In the top of game{}, set the counter to be whatever value want
 //     SHOULD BE 120  counter: 120,            ***************   CHANGE **********
 
-	counter: 30,
+	counter: 40,
 
 //Here we have the method for doing the actual counting down 
   countdown: function() {
@@ -96,12 +108,179 @@ var game = {
 //    $("#counter-number").html(game.counter);
     $("#counter-number").text(game.counter);
 
-    if (game.counter === 0) {
+    game.submitCheck();
+
+    if (submitEverDone) {
+    	console.log("SUBMIT THIS!");	
+
+    	for (var j=0; j<gameQuest.length; j++) {
+    		console.log("j: " + j);
+    		game.checkAllAnswers('question-' + j, j); ///  need index
+    	} // end of if for all questions
+
+    	game.done();
+    }
+    else if (game.counter === 0) {
       console.log("TIME UP");
+
+	  for (var j=0; j<gameQuest.length; j++) {
+			console.log("j: " + j);
+			game.checkAllAnswers('question-' + j, j); ///  need index
+	  } // end of if for all questions
+
 //This calls a game over function
       game.done();
-    }  // end of if
+    }  // end of else if
   },  // end of countdown function
+
+// checks to see which radio buttons were checked and if correct/incorrect/empty
+// handles on click
+//*******************************************************************************	
+//	var whatever =
+/*	$.each($("input[name='question-0']:checked"), function() {
+		console.log("helphelphelp");
+		});
+
+	console.log("whatever", whatever);
+	str = JSON.stringify(whatever, null, 4);
+
+	console.log("stringify ************** ", str, " end stringify ***********");
+
+	$.each($("input[name='question-1']:checked"), function() {
+		console.log("helphelphelp222");
+		});
+*/
+
+  submitCheck: function() {
+
+  	$("#submit").on("click", function (){	
+  		console.log("IN SubmitCheck - must have submitted ***");
+  		submitEverDone = true;
+//	var justSeeIfSubmitWorks = $("#submit").on("click", function (){	
+//		console.log("clicked submit" + justSeeIfSubmitWorks);
+//	});
+	});
+  },  // end of submitCheck function
+
+  checkAllAnswers: function (questionthis, index) {  //  has 'question-0' thru 'question-9' so far
+
+//	$.each($("input[name='question-0']:checked"), function() {
+//		console.log("q checked, so eval q0");
+		console.log("In checkAllAnswers");
+		console.log("questionthis: mlml " + questionthis);
+		var radios = document.getElementsByName(questionthis);
+
+		console.log("radios", radios);
+//                               game.checkAllAnswers('question-' + j);
+		console.log("radios.length b4 for " + radios.length);
+		gotARightOne = false;
+		neverAnswered = false;
+
+		for (var i = 0; i < radios.length; i++) {
+			if (radios[i].checked) {
+		console.log("radios[i]  is checked inside INDEX AND I: " + " " + index + " " + i);
+
+//				var radioValue = $("input[name='question-0']:checked").val(); ///**ml
+//  the following is not working, so replace with next
+/*				var creature = "name='" + questionthis + "'";
+//				var creature = "name=" + questionthis;
+
+				console.log("creature: mallard ", creature);
+
+				var radioValue = $("input[creature]:checked").val();
+*/	
+				var radioValue = "";
+				console.log("index: " + index);
+				if (index === 0) {
+					radioValue = $("input[name='question-0']:checked").val();
+					console.log("q0");
+				}
+				else if (index === 1) {
+					radioValue = $("input[name='question-1']:checked").val();
+					console.log("q1");
+				}
+				else if (index === 2) {
+					radioValue = $("input[name='question-2']:checked").val();
+					console.log("q2");
+				}
+				else if (index === 3) {
+					radioValue = $("input[name='question-3']:checked").val();
+					console.log("q3");
+				}
+				else if (index === 4) {
+					radioValue = $("input[name='question-4']:checked").val();
+					console.log("q4");
+				}
+				else if (index === 5) {
+					radioValue = $("input[name='question-5']:checked").val();
+					console.log("q5");
+				}
+				else if (index === 6) {
+					radioValue = $("input[name='question-6']:checked").val();
+					console.log("q6");
+				}
+				else if (index === 7) {
+					radioValue = $("input[name='question-7']:checked").val();
+					console.log("q7");
+				}
+				else if (index === 8) {
+					radioValue = $("input[name='question-8']:checked").val();
+					console.log("q8");
+				}
+				else if (index === 9) {
+					radioValue = $("input[name='question-9']:checked").val();
+					console.log("q9");
+				}
+				else {
+					console.log("WHAT index is this: " + index);
+				}
+
+				console.log("radioValue is (after the if): ", radioValue + " index " + index);
+
+				if (radioValue) {
+					// compare with correct answer
+					console.log("radios[i].value (if) :", radios[i].value);
+					if (radios[i].value == gameQuest[index].correctAnswer){
+						alert("Got this sucker right! q0  ");
+						gotARightOne = true;
+						neverAnswered = false;
+//						corr++;
+					}  // end of if 
+					else 
+						alert("Got this sucker wrong! q0  ");
+						neverAnswered = false;
+	//					inCorr++;
+				}  // end of if 
+			  	else {
+					unAnswered++;
+					neverAnswered = true;
+		//			alert("unAnswered/wrong! q0  ");
+			  	}  // end of else	
+			} // end of if (radios[i].checked) 
+			else {
+//				neverAnswered = true;
+//				alert("did not answer");
+			}
+			
+		}  // end of for
+
+		if (gotARightOne){
+			corr++;
+		} // end of if
+		else {
+			inCorr++;
+		}; // end of else
+		
+		if (neverAnswered) {
+				unAnswered++;
+		};
+		
+//	});  // end of each
+
+
+  },  // end of checkAllAnswers function
+	
+//****************************************************************************
 
   start: function() {
 //Inside start Function we set timer by calling the countdown method\
@@ -134,61 +313,7 @@ var game = {
 
 	done: function() {
 
-// checks to see which radio buttons were checked and if correct/incorrect/empty
-// handles on click
-//*******************************************************************************	
-	var whatever =
-	$.each($("input[name='question-0']:checked"), function() {
-		console.log("helphelphelp");
-		});
 
-	console.log("whatever", whatever);
-	str = JSON.stringify(whatever, null, 4);
-
-	console.log("stringify ************** ", str, " end stringify ***********");
-
-	$.each($("input[name='question-1']:checked"), function() {
-		console.log("helphelphelp222");
-		});
-	
-	var justSeeIfSubmitWorks = $("#submit").on("click", function (){	
-		console.log("clicked submit" + justSeeIfSubmitWorks);
-	});
-	console.log("ima duna");
-		for (var i=0; i< gameQuest.length; i++) {
-			var gameQ = 'question-' + i;
-			console.log("gameQ here:  " + gameQ);
-
-			var radio = $(gameQ).on("click", function (){
-				radioEverChecked = true;
-				console.log(gameQuest[i].correctAnswer + " compare " + radio.checked)
-				if (!radio.checked){
-					console.log("NOT CHECKED!!!!");
-				}
-				else if ((radio.value) == gameQuest[i].correctAnswer && (radio.checked)) {
-					console.log("correct and checked");
-					corr++;
-				} // end of if
-				else if ((radio.value) == gameQuest[i].correctAnswer && (!radio.checked)) {
-					console.log("correct and not checked");
-					inCorr++;
-					UnAnswered++;
-				}  // end of else if
-				else {
-					console.log("What's going on here?")
-					inCorr++;
-				} // end of else
-			})  // end of on-click gameQ
-				console.log("done with nothing checked");
-		};  // end of for loop
-
-		if (!radioEverChecked) {
-			console.log("Radio Never Checked");
-		};
-		
-
-	
-//*******************************************************************************	
 //		console.log("Timer in done function before clearInterval: " + timer);
 		clearInterval(timer);
 //		console.log("Timer in done function after clearInterval: " + timer);
@@ -226,11 +351,11 @@ var game = {
           gameStats.append(pTwo);
 
           // Storing the length of the unanswered array
-     //     var notAnswered = UnAnswered.length;      ***********CHANGE LATER
-  //        var notAnswered = 88;
+     //     var unAnswered = UnAnswered.length;      ***********CHANGE LATER
+  //        var unAnswered = 88;
 
-          // Creating an element to hold the notAnswered amount
-          var pThree = $("<p>").text("Unanswered: " + notAnswered);
+          // Creating an element to hold the unAnswered amount
+          var pThree = $("<p>").text("Unanswered: " + unAnswered);
 
           // Appending the above
           gameStats.append(pThree);
