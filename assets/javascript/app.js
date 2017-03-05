@@ -1,6 +1,10 @@
 var questionQuest;
 var questionCount = 0;
 var timer;
+var corr = 0;
+var inCorr = 0;
+var notAnswered = 0;
+var radioEverChecked = false;
 
 //  Game Questions Object
 
@@ -81,9 +85,9 @@ var game = {
   correct: 0,
   incorrect: 0,
 // In the top of game{}, set the counter to be whatever value want
-//     SHOULD BE 120  counter: 120,
+//     SHOULD BE 120  counter: 120,            ***************   CHANGE **********
 
-	counter: 3,
+	counter: 30,
 
 //Here we have the method for doing the actual counting down 
   countdown: function() {
@@ -115,8 +119,10 @@ var game = {
 	   $("#questionAnswerDiv").append("<h2>" + gameQuest[i].question + "</h2>");
 
 		for (var j=0; j<gameQuest[i].answers.length; j++){
+// puts each answer on the page with the question from above
 		  $("#questionAnswerDiv").append("<input type='radio' name='question-" + i +
         "' value='" + gameQuest[i].answers[j] + "''>" + gameQuest[i].answers[j]);
+
 		}; // end of j loop
 	};   // end of i loop
 
@@ -128,9 +134,61 @@ var game = {
 
 	done: function() {
 
-// check to see which radio buttons were checked and if correct/incorrect/empty
+// checks to see which radio buttons were checked and if correct/incorrect/empty
+// handles on click
+//*******************************************************************************	
+	var whatever =
+	$.each($("input[name='question-0']:checked"), function() {
+		console.log("helphelphelp");
+		});
+
+	console.log("whatever", whatever);
+	str = JSON.stringify(whatever, null, 4);
+
+	console.log("stringify ************** ", str, " end stringify ***********");
+
+	$.each($("input[name='question-1']:checked"), function() {
+		console.log("helphelphelp222");
+		});
+	
+	var justSeeIfSubmitWorks = $("#submit").on("click", function (){	
+		console.log("clicked submit" + justSeeIfSubmitWorks);
+	});
+	console.log("ima duna");
+		for (var i=0; i< gameQuest.length; i++) {
+			var gameQ = 'question-' + i;
+			console.log("gameQ here:  " + gameQ);
+
+			var radio = $(gameQ).on("click", function (){
+				radioEverChecked = true;
+				console.log(gameQuest[i].correctAnswer + " compare " + radio.checked)
+				if (!radio.checked){
+					console.log("NOT CHECKED!!!!");
+				}
+				else if ((radio.value) == gameQuest[i].correctAnswer && (radio.checked)) {
+					console.log("correct and checked");
+					corr++;
+				} // end of if
+				else if ((radio.value) == gameQuest[i].correctAnswer && (!radio.checked)) {
+					console.log("correct and not checked");
+					inCorr++;
+					UnAnswered++;
+				}  // end of else if
+				else {
+					console.log("What's going on here?")
+					inCorr++;
+				} // end of else
+			})  // end of on-click gameQ
+				console.log("done with nothing checked");
+		};  // end of for loop
+
+		if (!radioEverChecked) {
+			console.log("Radio Never Checked");
+		};
 		
 
+	
+//*******************************************************************************	
 //		console.log("Timer in done function before clearInterval: " + timer);
 		clearInterval(timer);
 //		console.log("Timer in done function after clearInterval: " + timer);
@@ -151,7 +209,6 @@ var game = {
 
           // Storing the correct answers value
  //         var corr = correct.length;
- 			var corr = 44;
 
           // Creating an element to have the count of Correct Answers
           var pOne = $("<p>").text("Correct Answers: " + corr);
@@ -160,52 +217,32 @@ var game = {
           gameStats.append(pOne);
 
           // Storing the incorrect answers value
-   //       var Incorr = incorrect.length;
-   			var Incorr = 55;
+   //       var inCorr = incorrect.length;
 
-          // Creating an element to hold the count of Incorrect Answers
-          var pTwo = $("<p>").text("Incorrect Answers: " + Incorr);
+          // Creating an element to hold the count of Incorrect Answers ***CHANGE LATER
+          var pTwo = $("<p>").text("Incorrect Answers: " + inCorr);
 
           // Displaying above
           gameStats.append(pTwo);
 
           // Storing the length of the unanswered array
-     //     var notAnswered = UnAnswered.length;
-          var notAnswered = 88;
+     //     var notAnswered = UnAnswered.length;      ***********CHANGE LATER
+  //        var notAnswered = 88;
 
-          // Creating an element to hold the plot
+          // Creating an element to hold the notAnswered amount
           var pThree = $("<p>").text("Unanswered: " + notAnswered);
 
           // Appending the above
           gameStats.append(pThree);
 
-          // Retrieving the URL for the image
-    //      var imgURL = response.Poster;
-
-          // Creating an element to hold the image
-  //        var image = $("<img>").attr("src", imgURL);
-
-          // Appending the image
-//          gameStats.append(image);
-
-          // Putting the entire movie above the previous movies
+          // Putting the stats up top
           $("#gameIsOver").prepend(gameStats);
 
-
-
-//$("#gameIsOver").append("<h2><span id='counter-number'></span></h2>");
-
-	}
-
+	}  // end of done function
   };  // end of game object
 
 //  This code will run as soon as the page loads.
 $(document).ready(function() {
-//                              ml or jQuery(function($) {thos 4 in this})
-  //  Click events are done for us:
-//  $("#lap").click(stopwatch.recordLap);
-//  $("#stop").click(stopwatch.stop);
- // $("#reset").click(stopwatch.reset);
 
 /// THIS IS WHAT WORKS  
 $("#start").click(game.start);
@@ -213,6 +250,5 @@ $("#start").click(game.start);
 // dot and variable notation (most of the time files will be with JSON or object)
 
 	console.log(game);
-
 
 }); // end of document.ready
