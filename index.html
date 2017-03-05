@@ -16,35 +16,32 @@
   </head>
 
   <body>
-   <div id="timerDisplay" class="container">
+    <div class="container">
       <div class="row">
-          <div class="col-sm-12">
-            <h1>Trivia Game</h1>
+        <div class="col-sm-12">
+            <h1>Finding Nemo Movie Trivia</h1>
+            <div id="timerDisplay"></div>
             <div class="container">
               <button id="start">Start</button>
          <!--     <button id="qa-url-div"></button>  -->
               <div id="questionAnswerDiv">
-         <!--       <button id="button1"></button>
-                <button id="button2"></button>
-                <button id="button3"></button>
-                <button id="button4"></button>   -->
-              </div>
+              </div> <!-- end of questionAnswerDiv   -->
               <div class="container text-center">
                   <button type="button" id="submit" class="btn btn-success">Success</button>
-              </div>
-              <div id"GameIsOver">
-                <div id="correctAtEnd"><span></span></div>
-                <div id="incorrectAtEnd"><span></span></div>
-                <div id="unansweredAtEnd"><span></span></div>
+              </div>  <!-- end of submit buttons container text-center   -->
+              <div id="gameIsOver" class="container text-center">
+    <!--            <div id="correctAnswers"><span></span></div>
+                <div id="incorrectAnswers"><span></span></div>
+                <div id="unanswered"><span></span></div>          -->
               </div>
                   
       <!--    <button id="stop">Stop</button>
           <button id="reset">Reset</button>     -->
-          </div>  <!-- end of container -->
-        </div>  <!-- end of col-sm-8 -->
-      </div>  
+          </div>  <!-- end of timerDisplay container -->
+        </div>  <!-- end of col-sm-12 -->
+      </div>  <!-- end of row -->
 
-   </div> <!-- end of sunset -->
+    </div> <!-- end of container -->
 
     <!-- jQuery -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.js"></script>

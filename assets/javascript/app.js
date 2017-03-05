@@ -83,7 +83,7 @@ var game = {
 // In the top of game{}, set the counter to be whatever value want
 //     SHOULD BE 120  counter: 120,
 
-	counter: 25,
+	counter: 3,
 
 //Here we have the method for doing the actual counting down 
   countdown: function() {
@@ -91,6 +91,7 @@ var game = {
 //    console.log("game.counter: inside of countdown function: " + game.counter);
 //    $("#counter-number").html(game.counter);
     $("#counter-number").text(game.counter);
+
     if (game.counter === 0) {
       console.log("TIME UP");
 //This calls a game over function
@@ -102,9 +103,7 @@ var game = {
 //Inside start Function we set timer by calling the countdown method\
     
     timer = setInterval(game.countdown, 1000);
-//    console.log("here is the timer")
-//    console.log("timer: " + timer);
-//  $("#timerDisplay").html("");
+
   	$("#timerDisplay").prepend("<h2>Time Remaining: <span id='counter-number'></span> Seconds</h2>");
 //	$("#questionAnswerDiv").hide();
 
@@ -128,9 +127,74 @@ var game = {
 // clear the interval in the end
 
 	done: function() {
-		console.log("Timer in done function before clearInterval: " + timer);
+
+// check to see which radio buttons were checked and if correct/incorrect/empty
+		
+
+//		console.log("Timer in done function before clearInterval: " + timer);
 		clearInterval(timer);
-		console.log("Timer in done function after clearInterval: " + timer);
+//		console.log("Timer in done function after clearInterval: " + timer);
+
+//  hide all the questions from the page
+		$("#timerDisplay").hide();
+		$("#questionAnswerDiv").hide();
+		$("#submit").hide();
+
+// Creating a div to hold the game ending stats
+          var gameStats = $("<div class='allDone'>");
+
+      // Creating an element to display All Done!
+          var pZero = $("<p>").text(" All Done! ");
+
+          // Displaying above
+          gameStats.html(pZero);
+
+          // Storing the correct answers value
+ //         var corr = correct.length;
+ 			var corr = 44;
+
+          // Creating an element to have the count of Correct Answers
+          var pOne = $("<p>").text("Correct Answers: " + corr);
+
+          // Displaying above
+          gameStats.append(pOne);
+
+          // Storing the incorrect answers value
+   //       var Incorr = incorrect.length;
+   			var Incorr = 55;
+
+          // Creating an element to hold the count of Incorrect Answers
+          var pTwo = $("<p>").text("Incorrect Answers: " + Incorr);
+
+          // Displaying above
+          gameStats.append(pTwo);
+
+          // Storing the length of the unanswered array
+     //     var notAnswered = UnAnswered.length;
+          var notAnswered = 88;
+
+          // Creating an element to hold the plot
+          var pThree = $("<p>").text("Unanswered: " + notAnswered);
+
+          // Appending the above
+          gameStats.append(pThree);
+
+          // Retrieving the URL for the image
+    //      var imgURL = response.Poster;
+
+          // Creating an element to hold the image
+  //        var image = $("<img>").attr("src", imgURL);
+
+          // Appending the image
+//          gameStats.append(image);
+
+          // Putting the entire movie above the previous movies
+          $("#gameIsOver").prepend(gameStats);
+
+
+
+//$("#gameIsOver").append("<h2><span id='counter-number'></span></h2>");
+
 	}
 
   };  // end of game object
