@@ -90,7 +90,7 @@ var game = {
 // In the top of game{}, set the counter to be whatever value want
 //     SHOULD BE 120  counter: 120,            ***************   CHANGE **********
 
-	counter: 40,
+	counter: 120,
 
 //Here we have the method for doing the actual counting down 
   countdown: function() {
