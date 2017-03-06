@@ -16,79 +16,69 @@ var radioFail =[];
   var gameQuest = [{
   					question: "What is one of the best know catch phrases from this movie?",
 		            answers:["Gotta keep moving","Where is Nemo","Just keep swimming","I cannot remember"],
-		            url: "../images/sunset.jpg",
-	  	//			url: "http://www.grahamowengallery.com/forum/mallard.jpg",
+		    //        url: "../images/sunset.jpg",
 	  				correctAnswer: "Just keep swimming"
 	  				},
 					
 					{
 					question: "What type of a fish is Nemo?",
 	  				answers:["Blowfish","Clownfish","Pufferfish","Striped fish"],
-	  				url: "../images/sunset.jpg",
-	  //				url: "https://i.ytimg.com/vi/_z-1fTlSDF0/maxresdefault.jpg",
+	  		//		url: "../images/sunset.jpg",
 	  				correctAnswer: "Clownfish"
 	  				},
 					
 					{
 					question: "How old is Crush, the Turtle?",
 	  				answers:["102","150","40","99"],
-	  				url: "../images/sunset.jpg",
-	  //				url: "http://www.grahamowengallery.com/forum/mallard.jpg",
-	  				correctAnswer: "150",
+	  		//		url: "../images/sunset.jpg",
+	  				correctAnswer: "150"
 	  				},
 					
 					{
 					question: "From what disorder does Dory suffer?",
 	  				answers:["Borderline personality disorder","Dementia","Anterograde Amnesia","Autism"],
-	  //				url: "http://www.grahamowengallery.com/forum/mallard.jpg",
-	  				correctAnswer: "Anterograde Amnesia",
+			//		url: "../images/sunset.jpg",
+	  				correctAnswer: "Anterograde Amnesia"
 	  				},
 					
 					{
 					question: "What is the safest way for Dory and Marlin to get past the maze of Jellyfish",
 	  				answers:["Over","Under","Through","Around"],
-	  				url: "../images/sunset.jpg",
-	  //				url: "http://www.grahamowengallery.com/forum/mallard.jpg",
-	  				correctAnswer: "Over",
+	  		//		url: "../images/sunset.jpg",
+	  				correctAnswer: "Over"
 	  				},
 					
 					{
 					question: "What is Anterograde Amnesia?",
 	  				answers:["Inability to swim for a long time","Inability to keep friends","Inability to swim straight","Inability to form new memories"],
-	  				url: "../images/sunset.jpg",
-	  //				url: "http://www.grahamowengallery.com/forum/mallard.jpg",
+	  		//		url: "../images/sunset.jpg",
 	  				correctAnswer: "Inability to form new memories"
 	  				},
 
 					{
 					question: "Which one of these can foster memory retention for those who suffer from Anterograde Amnesia?",
 	  				answers:["A positive environment","Social support","Familiarity","All of the above"],
-	  				url: "../images/sunset.jpg",
-	  //				url: "http://www.grahamowengallery.com/forum/mallard.jpg",
-	  				correctAnswer: "All of the above",
+	  		//		url: "../images/sunset.jpg",
+	  				correctAnswer: "All of the above"
 	  				},
 
 					{
 					question: "Why was Nemo's fin smaller than the other?",
 	  				answers:["Birth defect","Ran into the side of a boat","Attacked while still in the egg","Clipped by a shark"],
-	  				url: "../images/sunset.jpg",
-	  //				url: "http://www.grahamowengallery.com/forum/mallard.jpg",
-	  				correctAnswer: "Attacked while still in the egg",
+	  		//		url: "../images/sunset.jpg",
+	  				correctAnswer: "Attacked while still in the egg"
 	  				},
 
 					{
 					question: "What address was Dory and Marlin were looking for?",
 	  				answers:["44 Winding Way","13 Shark Drive","52 Reed Road","42 Wallaby Way"],
-	  				url: "../images/sunset.jpg",
-	  //				url: "http://www.grahamowengallery.com/forum/mallard.jpg",
-	  				correctAnswer: "42 Wallaby Way",
-	  
+	  		//		url: "../images/sunset.jpg",
+	  				correctAnswer: "42 Wallaby Way"	  
 	  				},
 	  									{
 					question: "Who attacked Coral and all but one of her eggs?",
 	  				answers:["Jellyfish","Barracuda","A shark","A whale"],
-	  				url: "../images/sunset.jpg",
-	  //				url: "https://i.ytimg.com/vi/_z-1fTlSDF0/maxresdefault.jpg",
+	  		//		url: "../images/sunset.jpg",
 	  				correctAnswer: "Barracuda"
 	  				}];
 
@@ -231,10 +221,7 @@ var game = {
 	//				console.log("q9");
 				}
 				else {
-	//				console.log("WHAT index is this: " + index);
 				};
-
-	//			console.log("radioValue is (after the if): ", radioValue + " index " + index);
 
 				if (radioValue) {
 					// compare with correct answer
@@ -243,69 +230,52 @@ var game = {
 		//				alert("Got this sucker right! q " + index);
 						gotARightOne = true;
 						neverAnswered = false;
-//						corr++;
 					}  // end of if 
 					else 
-			//			alert("Got this sucker wrong! q  " + index);
 						neverAnswered = false;
-	//					inCorr++;
 				}  // end of if 
 			  	else {
 					unAnswered++;
 					neverAnswered = true;
-		//			alert("unAnswered/wrong! q0  ");
 			  	}  // end of else	
 			} // end of if (radios[i].checked) 
 			else {       // radio[i] was not checked 
 				radioFail.push("i");
-//				alert("did not answer");
 			}
-			
 		}  // end of for
-
 		if (gotARightOne){
 			corr++;
 		} // end of if
 		else {
 			inCorr++;
 		}; // end of else
-		
 // radioFail is reset every for loop for each new question
 		if (radioFail.length === 4) {
 			unAnswered++;
 		};
-		
-//	});  // end of each
-
-
+//	});  // end of each not in use
   },  // end of checkAllAnswers function
 	
-//****************************************************************************
-
   start: function() {
 //Inside start Function we set timer by calling the countdown method\
  
     $("#submit").show();
-    $("#submit").text("Submit");
-
-//  $("#submit").show();
+    $("#submit").text("Submit").css('border', '3px solid blue').width(100).height(50);
 
     timer = setInterval(game.countdown, 1000);
 
   	$("#timerDisplay").prepend("<h2>Time Remaining: <span id='counter-number'></span> Seconds</h2>");
-//	$("#questionAnswerDiv").hide();
 
 	$("#start").remove(); //remove start button; no longer needed (hide if needed)
 
 	for (var i=0; i<gameQuest.length; i++){
-//		console.log("gameQuest[i].question BOZO ", gameQuest[i].question);
 
 	   $("#questionAnswerDiv").append("<h2>" + gameQuest[i].question + "</h2>");
 
-		for (var j=0; j<gameQuest[i].answers.length; j++){
 // puts each answer on the page with the question from above
+		for (var j=0; j<gameQuest[i].answers.length; j++){
 		  $("#questionAnswerDiv").append("<input type='radio' name='question-" + i +
-        "' value='" + gameQuest[i].answers[j] + "''>" + gameQuest[i].answers[j]);
+        "' value='" + gameQuest[i].answers[j] + "''>" + gameQuest[i].answers[j] + "<br/>");
 
 		}; // end of j loop
 	};   // end of i loop
@@ -317,13 +287,9 @@ var game = {
 // clear the interval in the end
 
 	done: function() {
-
-
-//		console.log("Timer in done function before clearInterval: " + timer);
 		clearInterval(timer);
-//		console.log("Timer in done function after clearInterval: " + timer);
 
-//  hide all the questions from the page
+//  hide all the questions, answers, submit buttons, etc. from the page
 		$("#timerDisplay").hide();
 		$("#questionAnswerDiv").hide();
 		$("#submit").hide();
@@ -337,27 +303,17 @@ var game = {
           // Displaying above
           gameStats.html(pZero);
 
-          // Storing the correct answers value
- //         var corr = correct.length;
-
           // Creating an element to have the count of Correct Answers
           var pOne = $("<p>").text("Correct Answers: " + corr);
 
           // Displaying above
           gameStats.append(pOne);
 
-          // Storing the incorrect answers value
-   //       var inCorr = incorrect.length;
-
           // Creating an element to hold the count of Incorrect Answers ***CHANGE LATER
           var pTwo = $("<p>").text("Incorrect Answers: " + inCorr);
 
           // Displaying above
           gameStats.append(pTwo);
-
-          // Storing the length of the unanswered array
-     //     var unAnswered = UnAnswered.length;      ***********CHANGE LATER
-  //        var unAnswered = 88;
 
           // Creating an element to hold the unAnswered amount
           var pThree = $("<p>").text("Unanswered: " + unAnswered);
@@ -374,13 +330,10 @@ var game = {
 //  This code will run as soon as the page loads.
 $(document).ready(function() {
 
+$("#start").css('border', '3px solid blue').width(100).height(50);
 $("#submit").hide();
 
 /// THIS IS WHAT WORKS  
 $("#start").click(game.start);
-
-// dot and variable notation (most of the time files will be with JSON or object)
-
-//	console.log(game);
 
 }); // end of document.ready

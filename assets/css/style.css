@@ -21,13 +21,15 @@ body { /* Visual */
   height:100%;
 }
 #start {
-  width: 20%;
-  color: ;
+  width: 40%;
+  height: 30%;
+  color: white;
   background-color: green;
 }
 
 .boxy {
   background-color: rgb(255,130,255); 
+/*  width: 80%;  */
   opacity: .8;
   color: black;
 }
