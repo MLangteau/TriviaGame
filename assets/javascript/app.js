@@ -9,12 +9,13 @@ var submitEverDone = false;
 var radios = [];
 var gotARightOne = false;
 var neverAnswered = false;
+var radioFail =[];
 
 //  Game Questions Object
 
   var gameQuest = [{
   					question: "What is one of the best know catch phrases from this movie?",
-		            answers:["Gotta keep moving","Don't stop now","Just keep swimming","I can't remember"],
+		            answers:["Gotta keep moving","Where is Nemo","Just keep swimming","I cannot remember"],
 		            url: "../images/sunset.jpg",
 	  	//			url: "http://www.grahamowengallery.com/forum/mallard.jpg",
 	  				correctAnswer: "Just keep swimming"
@@ -84,7 +85,7 @@ var neverAnswered = false;
 	  
 	  				},
 	  									{
-					question: "Who ate Nemo's mother, Coral, and all but one of her eggs?",
+					question: "Who attacked Coral and all but one of her eggs?",
 	  				answers:["Jellyfish","Barracuda","A shark","A whale"],
 	  				url: "../images/sunset.jpg",
 	  //				url: "https://i.ytimg.com/vi/_z-1fTlSDF0/maxresdefault.jpg",
@@ -111,20 +112,20 @@ var game = {
     game.submitCheck();
 
     if (submitEverDone) {
-    	console.log("SUBMIT THIS!");	
+ //   	console.log("SUBMIT THIS!");	
 
     	for (var j=0; j<gameQuest.length; j++) {
-    		console.log("j: " + j);
+ //   		console.log("Question j when submitting : " + j);
     		game.checkAllAnswers('question-' + j, j); ///  need index
     	} // end of if for all questions
 
     	game.done();
     }
     else if (game.counter === 0) {
-      console.log("TIME UP");
+   //   console.log("TIME UP");
 
 	  for (var j=0; j<gameQuest.length; j++) {
-			console.log("j: " + j);
+	//		console.log("Question j when Time is up : " + j);
 			game.checkAllAnswers('question-' + j, j); ///  need index
 	  } // end of if for all questions
 
@@ -154,7 +155,7 @@ var game = {
   submitCheck: function() {
 
   	$("#submit").on("click", function (){	
-  		console.log("IN SubmitCheck - must have submitted ***");
+ // 		console.log("IN SubmitCheck - must have submitted ***");
   		submitEverDone = true;
 //	var justSeeIfSubmitWorks = $("#submit").on("click", function (){	
 //		console.log("clicked submit" + justSeeIfSubmitWorks);
@@ -166,88 +167,86 @@ var game = {
 
 //	$.each($("input[name='question-0']:checked"), function() {
 //		console.log("q checked, so eval q0");
-		console.log("In checkAllAnswers");
-		console.log("questionthis: mlml " + questionthis);
+	//	console.log("In checkAllAnswers function");
+	//	console.log("questionthis: " + questionthis);
 		var radios = document.getElementsByName(questionthis);
-
-		console.log("radios", radios);
+//		console.log("radios ", radios);
 //                               game.checkAllAnswers('question-' + j);
-		console.log("radios.length b4 for " + radios.length);
+	//	console.log("radios.length b4 for " + radios.length);
 		gotARightOne = false;
 		neverAnswered = false;
-
+		radioFail = [];
 		for (var i = 0; i < radios.length; i++) {
 			if (radios[i].checked) {
-		console.log("radios[i]  is checked inside INDEX AND I: " + " " + index + " " + i);
+	//	console.log("radios[i] is checked inside INDEX AND I: " + " " + index + " " + i);
 
 //				var radioValue = $("input[name='question-0']:checked").val(); ///**ml
 //  the following is not working, so replace with next
 /*				var creature = "name='" + questionthis + "'";
 //				var creature = "name=" + questionthis;
-
-				console.log("creature: mallard ", creature);
-
+				console.log("creature: ", creature);
 				var radioValue = $("input[creature]:checked").val();
 */	
 				var radioValue = "";
-				console.log("index: " + index);
+	//			console.log("index: " + index);
+		// had to hard code this because the above options were not working.
 				if (index === 0) {
 					radioValue = $("input[name='question-0']:checked").val();
-					console.log("q0");
+	//				console.log("q0");
 				}
 				else if (index === 1) {
 					radioValue = $("input[name='question-1']:checked").val();
-					console.log("q1");
+	//				console.log("q1");
 				}
 				else if (index === 2) {
 					radioValue = $("input[name='question-2']:checked").val();
-					console.log("q2");
+	//				console.log("q2");
 				}
 				else if (index === 3) {
 					radioValue = $("input[name='question-3']:checked").val();
-					console.log("q3");
+	//				console.log("q3");
 				}
 				else if (index === 4) {
 					radioValue = $("input[name='question-4']:checked").val();
-					console.log("q4");
+	//				console.log("q4");
 				}
 				else if (index === 5) {
 					radioValue = $("input[name='question-5']:checked").val();
-					console.log("q5");
+	//				console.log("q5");
 				}
 				else if (index === 6) {
 					radioValue = $("input[name='question-6']:checked").val();
-					console.log("q6");
+	//				console.log("q6");
 				}
 				else if (index === 7) {
 					radioValue = $("input[name='question-7']:checked").val();
-					console.log("q7");
+	//				console.log("q7");
 				}
 				else if (index === 8) {
 					radioValue = $("input[name='question-8']:checked").val();
-					console.log("q8");
+	//				console.log("q8");
 				}
 				else if (index === 9) {
 					radioValue = $("input[name='question-9']:checked").val();
-					console.log("q9");
+	//				console.log("q9");
 				}
 				else {
-					console.log("WHAT index is this: " + index);
-				}
+	//				console.log("WHAT index is this: " + index);
+				};
 
-				console.log("radioValue is (after the if): ", radioValue + " index " + index);
+	//			console.log("radioValue is (after the if): ", radioValue + " index " + index);
 
 				if (radioValue) {
 					// compare with correct answer
-					console.log("radios[i].value (if) :", radios[i].value);
+	//				console.log("radios[i].value (if) :", radios[i].value);
 					if (radios[i].value == gameQuest[index].correctAnswer){
-						alert("Got this sucker right! q0  ");
+		//				alert("Got this sucker right! q " + index);
 						gotARightOne = true;
 						neverAnswered = false;
 //						corr++;
 					}  // end of if 
 					else 
-						alert("Got this sucker wrong! q0  ");
+			//			alert("Got this sucker wrong! q  " + index);
 						neverAnswered = false;
 	//					inCorr++;
 				}  // end of if 
@@ -257,8 +256,8 @@ var game = {
 		//			alert("unAnswered/wrong! q0  ");
 			  	}  // end of else	
 			} // end of if (radios[i].checked) 
-			else {
-//				neverAnswered = true;
+			else {       // radio[i] was not checked 
+				radioFail.push("i");
 //				alert("did not answer");
 			}
 			
@@ -271,8 +270,9 @@ var game = {
 			inCorr++;
 		}; // end of else
 		
-		if (neverAnswered) {
-				unAnswered++;
+// radioFail is reset every for loop for each new question
+		if (radioFail.length === 4) {
+			unAnswered++;
 		};
 		
 //	});  // end of each
@@ -284,7 +284,12 @@ var game = {
 
   start: function() {
 //Inside start Function we set timer by calling the countdown method\
-    
+ 
+    $("#submit").show();
+    $("#submit").text("Submit");
+
+//  $("#submit").show();
+
     timer = setInterval(game.countdown, 1000);
 
   	$("#timerDisplay").prepend("<h2>Time Remaining: <span id='counter-number'></span> Seconds</h2>");
@@ -369,11 +374,13 @@ var game = {
 //  This code will run as soon as the page loads.
 $(document).ready(function() {
 
+$("#submit").hide();
+
 /// THIS IS WHAT WORKS  
 $("#start").click(game.start);
 
 // dot and variable notation (most of the time files will be with JSON or object)
 
-	console.log(game);
+//	console.log(game);
 
 }); // end of document.ready
